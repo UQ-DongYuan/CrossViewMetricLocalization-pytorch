@@ -4,7 +4,7 @@ import torch.nn as nn
 
 
 class VGG16(nn.Module):
-    def __init__(self, keep_prob):
+    def __init__(self, keep_prob=0.8):
         super().__init__()
         vgg16 = models.vgg16(pretrained=True)
         features = list(vgg16.features.children())
@@ -80,7 +80,11 @@ class VGG16(nn.Module):
 if __name__ == '__main__':
     vgg16 = VGG16(keep_prob=0.5)
     img = torch.randn(1, 3, 512, 512)
-    print(vgg16)
+    # print(vgg16)
     result = vgg16(img)
     print(result[0].shape)
+    print(result[1].shape)
+    print(result[2].shape)
+    print(result[3].shape)
+    print(result[4].shape)
 
