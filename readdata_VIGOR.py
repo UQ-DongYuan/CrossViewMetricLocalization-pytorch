@@ -206,13 +206,14 @@ class VIGOR(Dataset):
             return sat_img, grd_img, gt
 
 if __name__ == '__main__':
-    dataset = VIGOR(area='same', train_test='test', val=False)
+    dataset = VIGOR(area='same', train_test='train', val=False)
     dataloader = DataLoader(dataset, batch_size=2, shuffle=False)
-    # print(len(dataset))
-    for sat, grd, gt in dataloader:
-        print(sat.shape)
-        print(grd.shape)
-        print(gt.shape)
+    print(len(dataset))
+    print(dataset.val_data_size)
+    # for sat, grd, gt in dataloader:
+    #     print(sat.shape)
+    #     print(grd.shape)
+    #     print(gt.shape)
 
 
 

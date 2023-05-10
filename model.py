@@ -89,7 +89,7 @@ class CVML(nn.Module):
         cost_map = torch.cat([matching_score, sat_global], dim=3)  # Batch 8 8 4097
         logits = self.costmap_decoder(cost_map.permute(0, 3, 1, 2), sat512, sat256, sat128, sat64, sat_local)
 
-        return logits, matching_score
+        return logits, matching_score.permute(0, 3, 1, 2)
 
 
 if __name__ == '__main__':
