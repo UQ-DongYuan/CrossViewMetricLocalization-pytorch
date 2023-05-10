@@ -28,8 +28,8 @@ class VIGOR(Dataset):
         label_root = 'splits'
 
         if self.area == 'same':
-            self.train_city_list = ['NewYork', 'Seattle', 'SanFrancisco', 'Chicago']
-            self.test_city_list = ['NewYork', 'Seattle', 'SanFrancisco', 'Chicago']
+            self.train_city_list = ['NewYork', 'SanFrancisco', 'Chicago']
+            self.test_city_list = ['NewYork',  'SanFrancisco', 'Chicago']
         elif self.area == 'cross':
             self.train_city_list = ['NewYork', 'Seattle']
             if self.train_test == 'train':

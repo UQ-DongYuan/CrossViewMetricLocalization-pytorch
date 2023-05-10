@@ -78,8 +78,8 @@ class VGG16(nn.Module):
 
 
 if __name__ == '__main__':
-    vgg16 = VGG16(keep_prob=0.5)
-    img = torch.randn(1, 3, 512, 512)
+    vgg16 = VGG16(keep_prob=0.8).cuda()
+    img = torch.randn(1, 3, 512, 512).to('cuda')
     # print(vgg16)
     result = vgg16(img)
     print(result[0].shape)

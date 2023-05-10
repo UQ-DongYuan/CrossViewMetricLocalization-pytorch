@@ -24,6 +24,7 @@ save_model_path = './models/'
 train_data_size = 42087   # training iterations: 42087 // 8 = 5260
 val_data_size = 10522     # val  iterations: 10522 // 8 = 1315
 device = "cuda" if torch.cuda.is_available() else "cpu"
+print(device)
 
 class ContrastiveLoss(nn.Module):
     def __init__(self, tem=temperature):
@@ -52,10 +53,10 @@ class SoftmaxCrossEntropyWithLogits(nn.Module):
 def main():
     # setup train/val dataset
     train_dataset = VIGOR(area=area, train_test='train', val=False)
-    train_dataloader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True, num_workers=4, drop_last=True)
+    train_dataloader = DataLoader(train_dataset, batch_size=batch_size, shuffle=True, drop_last=True)
 
     val_dataset = VIGOR(area=area, train_test='train', val=True)
-    val_dataloader = DataLoader(val_dataset, batch_size=batch_size, shuffle=False, num_workers=4, drop_last=True)
+    val_dataloader = DataLoader(val_dataset, batch_size=batch_size, shuffle=False, drop_last=True)
 
     # build model
     model = CVML().to(device)
