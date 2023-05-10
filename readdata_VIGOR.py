@@ -174,6 +174,7 @@ class VIGOR(Dataset):
             sigma, mu = 4, 0.0
             gt = np.exp(-((d - mu) ** 2 / (2.0 * sigma ** 2)))
             gt = torch.from_numpy(gt)
+            gt = gt.unsqueeze(0)
 
             return sat_img, grd_img, gt
 
@@ -200,11 +201,18 @@ class VIGOR(Dataset):
             sigma, mu = 4, 0.0
             gt = np.exp(-((d - mu) ** 2 / (2.0 * sigma ** 2)))
             gt = torch.from_numpy(gt)
+            gt = gt.unsqueeze(0)
 
             return sat_img, grd_img, gt
 
 if __name__ == '__main__':
-    dataset = VIGOR(area='same', train_test='train', val=False)
-    dataloader = DataLoader(dataset, batch_size=1, shuffle=False)
+    dataset = VIGOR(area='same', train_test='test', val=False)
+    dataloader = DataLoader(dataset, batch_size=2, shuffle=False)
+    # print(len(dataset))
+    for sat, grd, gt in dataloader:
+        print(sat.shape)
+        print(grd.shape)
+        print(gt.shape)
+
 
 
