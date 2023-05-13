@@ -93,7 +93,7 @@ class CVML(nn.Module):
 
 
 if __name__ == '__main__':
-    model = CVML().cuda()
+    model = CVML()
     input_img_grd = torch.randn(2, 3, 320, 640)
     input_img_sat = torch.randn(2, 3, 512, 512)
     result = model(input_img_sat, input_img_grd)

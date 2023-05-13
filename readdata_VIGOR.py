@@ -28,8 +28,8 @@ class VIGOR(Dataset):
         label_root = 'splits'
 
         if self.area == 'same':
-            self.train_city_list = ['NewYork', 'SanFrancisco', 'Chicago']
-            self.test_city_list = ['NewYork',  'SanFrancisco', 'Chicago']
+            self.train_city_list = ['NewYork', 'Seattle', 'SanFrancisco', 'Chicago']
+            self.test_city_list = ['NewYork', 'Seattle', 'SanFrancisco', 'Chicago']
         elif self.area == 'cross':
             self.train_city_list = ['NewYork', 'Seattle']
             if self.train_test == 'train':
@@ -207,13 +207,14 @@ class VIGOR(Dataset):
 
 if __name__ == '__main__':
     dataset = VIGOR(area='same', train_test='train', val=False)
-    dataloader = DataLoader(dataset, batch_size=2, shuffle=False)
-    print(len(dataset))
-    print(dataset.val_data_size)
-    # for sat, grd, gt in dataloader:
-    #     print(sat.shape)
-    #     print(grd.shape)
-    #     print(gt.shape)
+    dataloader = DataLoader(dataset, batch_size=2, shuffle=True)
+    # print(len(dataset))
+    # print(dataset.val_data_size)
+    for i, (sat, grd, gt) in enumerate(dataloader):
+        print(i)
+        # print(sat.shape)
+        # print(grd.shape)
+        # print(gt.shape)
 
 
 

@@ -63,6 +63,7 @@ def main():
     optimizer = optim.Adam(model.parameters(), lr=learning_rate, betas=(0.9, 0.999))
     bottleneck_loss = ContrastiveLoss()
     heatmap_loss = SoftmaxCrossEntropyWithLogits()
+    best_distance_error = 9999
 
     for epoch_idx in range(start_epoch, end_epoch):
         model.train()
@@ -102,7 +103,7 @@ def main():
         val_epoch_loss = []
         distance = []
         softmax = torch.nn.Softmax(dim=1)
-        best_distance_error = 9999
+
         with torch.set_grad_enabled(False):
             for i, (val_sat, val_grd, val_gt) in tqdm(enumerate(val_dataloader)):
                 val_sat = val_sat.to(device)
@@ -124,10 +125,10 @@ def main():
                 val_heatmap = softmax(val_logits_reshaped).reshape(val_logits.shape)
                 for batch_idx in range(batch_size):
                     current_gt = val_gt[batch_idx, :, :, :].cpu().detach().numpy()   # B 1 512 512
-                    loc_gt = np.unravel_index(current_gt.argmax(), (512, 512, 1))
+                    loc_gt = np.unravel_index(current_gt.argmax(), current_gt.shape)
                     current_pred = val_heatmap[batch_idx, :, :, :].cpu().detach().numpy()
-                    loc_pred = np.unravel_index(current_pred.argmax(), (512, 512, 1))
-                    distance.append(np.sqrt((loc_gt[0]-loc_pred[0])**2+(loc_gt[1]-loc_pred[1])**2))
+                    loc_pred = np.unravel_index(current_pred.argmax(), current_pred.shape)
+                    distance.append(np.sqrt((loc_gt[1]-loc_pred[1])**2+(loc_gt[2]-loc_pred[2])**2))
 
             curr_val_loss = sum(val_epoch_loss) / (i+1)
             distance_error = np.mean(distance)
